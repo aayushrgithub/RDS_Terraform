@@ -1,0 +1,36 @@
+name: CICD
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    terraformbuild:
+        runs-on: ubuntu-latest
+        
+        steps:
+        - name: Checkout the code
+          uses: actions/checkout@v3
+
+        - name: Setup Terraform
+          uses: hashicorp/setup-terraform@v2
+          
+        - name: Configure AWS credentials
+          uses: aws-actions/configure-aws-credentials@v2
+          with:
+            role-to-assume: arn:aws:iam::345594574826:role/terraform_role
+            aws-region: eu-north-1
+        
+        - name: Terraform init
+          run: terraform init
+          
+        - name: Terraform planning
+          run: terraform plan
+          
+        - name: Terraform validate
+          run: terraform validate
+
+        - name: Terraform fnf
+          if: github.ref == 'refs/heads/main'
+          run: terraform apply -auto-approve
