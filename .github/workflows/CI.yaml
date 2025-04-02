@@ -21,6 +21,7 @@ jobs:
           with:
             role-to-assume: arn:aws:iam::345594574826:role/terraform_role
             aws-region: eu-north-1
+            audience: sts.amazonaws.com
         
         - name: Terraform init
           run: terraform init
