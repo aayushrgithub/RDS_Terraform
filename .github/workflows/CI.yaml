@@ -35,3 +35,6 @@ jobs:
         - name: Terraform fnf
           if: github.ref == 'refs/heads/main'
           run: terraform apply -auto-approve
+
+        - name: Destroy the created resources
+          run: terraform destroy -auto-approve  
